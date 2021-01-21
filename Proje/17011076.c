@@ -3,11 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-// NOT CSV DOSYASINDAKİ BOŞ HÜCRELERİN YERİNE 0 DEĞERİ YAZIP O ŞEKİLDE OKUMA YAPTIM AMAÇ HOCA BU ŞEKİLDE YAPILAN ÇÖZÜMÜN UYGUN OLDUĞUNU SÖYLEDİ.
-
 float average(int n, int **A, int **B, int index_a, int index_b){
 	int i;
-	float sum=0;		// NU ve U okuyucularının ortak okudukları kitaba göre ortalamaları
+	float sum=0;		// NU ve U okuyucularÄ±nÄ±n ortak okuduklarÄ± kitaba gÃ¶re ortalamalarÄ±
 	int count=0;
 	for(i=0;i<n;i++){
 		if(A[index_a][i]!=0  && B[index_b][i]!=0){
@@ -21,7 +19,7 @@ float average(int n, int **A, int **B, int index_a, int index_b){
 
 float averageself(int n, int **A, int index){
 	int i;
-	float sum=0;	// Okuyucunun kendi okuduğu kitaplara göre ortalaması
+	float sum=0;	// Okuyucunun kendi okuduÄŸu kitaplara gÃ¶re ortalamasÄ±
 	for(i=0;i<n;i++)
 		sum += A[index][i];
 		
@@ -34,27 +32,27 @@ float pearson(int **X, int **Y, int n, int index_x, int index_y) {
   	float var_x = 0;
   	float var_y = 0;
   	float cov = 0;
-  	float ort_x = average(n,X,Y,index_x,index_y);	// ilgili U kullanıcısının NU kullanıcısıyla okuduğu ortak kitaplara göre ortalaması
-  	float ort_y = average(n,Y,X,index_y,index_x);	// ilgili NU kullanıcısının U kullanıcısıyla okuduğu ortak kitaplara göre ortalaması
+  	float ort_x = average(n,X,Y,index_x,index_y);	// ilgili U kullanÄ±cÄ±sÄ±nÄ±n NU kullanÄ±cÄ±sÄ±yla okuduÄŸu ortak kitaplara gÃ¶re ortalamasÄ±
+  	float ort_y = average(n,Y,X,index_y,index_x);	// ilgili NU kullanÄ±cÄ±sÄ±nÄ±n U kullanÄ±cÄ±sÄ±yla okuduÄŸu ortak kitaplara gÃ¶re ortalamasÄ±
   	
   	
     while(i<n){
-    	if(Y[index_y][i]!=0 && X[index_x][i]!=0)	// İkisinin de kitabı okuması gerekli
+    	if(Y[index_y][i]!=0 && X[index_x][i]!=0)	// Ä°kisinin de kitabÄ± okumasÄ± gerekli
     		cov += ((X[index_x][i]-ort_x) * (Y[index_y][i]-ort_y));
     	i++;	
 	}
     	
     for(i=0;i<n;i++){
-		if(Y[index_y][i]!=0 && X[index_x][i]!=0)	// Variance hesaplaması
+		if(Y[index_y][i]!=0 && X[index_x][i]!=0)	// Variance hesaplamasÄ±
   			var_x += (pow((X[index_x][i]-ort_x),2));
 	  }	
 	  
     for(i=0;i<n;i++){
-		if(Y[index_y][i]!=0 && X[index_x][i]!=0)	// Variance hesaplaması
+		if(Y[index_y][i]!=0 && X[index_x][i]!=0)	// Variance hesaplamasÄ±
   			var_y += (pow((Y[index_y][i]-ort_y),2));
 	  }
 	  
-    float p_corr = cov / (sqrt(var_x) * sqrt(var_y));	// sim formülünün sonucunun hesaplanması
+    float p_corr = cov / (sqrt(var_x) * sqrt(var_y));	// sim formÃ¼lÃ¼nÃ¼n sonucunun hesaplanmasÄ±
     return p_corr; 
 }
  
@@ -63,16 +61,16 @@ float offer_book(float **sim, int **X, int **Y, int index_n, int book, int k, in
 	float ust=0, alt=0;
 	int index_x=0;
 	
-	for(j=0;j<k;j++){	// pred formülünün pay kısmının hesaplanması, sim hesaplanırken zaten en benzerlerin deger ve indexlerini sim matrisinde tutmustuk
-		index_x = (int)sim[index_n][j+k];	// o yüzden degerleri direkt matristen cekebiliyoruz.
+	for(j=0;j<k;j++){	// pred formÃ¼lÃ¼nÃ¼n pay kÄ±smÄ±nÄ±n hesaplanmasÄ±, sim hesaplanÄ±rken zaten en benzerlerin deger ve indexlerini sim matrisinde tutmustuk
+		index_x = (int)sim[index_n][j+k];	// o yÃ¼zden degerleri direkt matristen cekebiliyoruz.
 		ust +=  sim[index_n][j] * ( X[index_x][book] - averageself(book_size,X,index_x) );
 	}
 	
-	for(j=0;j<k;j++){	// pred formülünün payda kısmının hesaplanması
+	for(j=0;j<k;j++){	// pred formÃ¼lÃ¼nÃ¼n payda kÄ±smÄ±nÄ±n hesaplanmasÄ±
 		alt += sim[index_n][j];
 	}
 	
-	float sonuc = averageself(book_size,Y,index_n) + ust/alt;	// pred formülünün sonucunun hesaplanması
+	float sonuc = averageself(book_size,Y,index_n) + ust/alt;	// pred formÃ¼lÃ¼nÃ¼n sonucunun hesaplanmasÄ±
 	return sonuc;
 }
 
@@ -81,14 +79,14 @@ void sim_kont(float sonuc, float **sim, int index, int indexofsonuc, int k){
 	int flag = 0;
 	
 	for(i=0;i<k;i++){
-		if(sim[index][i] == -2 && flag == 0){	// benzerlik degerlerini ve bu degerlerin hangi okuyucuya ait olduğu(index) degerlerinin matris bosken karsılastırma
-			sim[index][i] = sonuc;				// yapmadan direkt atanması
+		if(sim[index][i] == -2 && flag == 0){	// benzerlik degerlerini ve bu degerlerin hangi okuyucuya ait olduÄŸu(index) degerlerinin matris bosken karsÄ±lastÄ±rma
+			sim[index][i] = sonuc;				// yapmadan direkt atanmasÄ±
 			sim[index][i+k] = indexofsonuc;
 			flag = 1;
 		}
 	}
 	
-	if(flag == 0){	// ilk atamalar gerceklestiyse en benzerler arasındaki minimum değer bulunur ve eger yeni benzerlik oranımız minimumdan büyük ise üstüne yazılır
+	if(flag == 0){	// ilk atamalar gerceklestiyse en benzerler arasÄ±ndaki minimum deÄŸer bulunur ve eger yeni benzerlik oranÄ±mÄ±z minimumdan bÃ¼yÃ¼k ise Ã¼stÃ¼ne yazÄ±lÄ±r
 		float min = sim[index][0];
 		int min_index = 0;
 	for(i=1;i<k;i++){
@@ -110,12 +108,12 @@ void readbooks(char **books, int book_size){
 	char *record, *line;
 	int i=0, j=0;
 	
-	FILE *fstream = fopen("RecomendationDataSet.csv","r");	// Dosyanın acılması
+	FILE *fstream = fopen("RecomendationDataSet.csv","r");	// DosyanÄ±n acÄ±lmasÄ±
 	if(fstream == NULL){
 		printf("Dosya acilamadi");	
 		exit(0);
 	}
-	line=fgets(buffer,sizeof(buffer),fstream); // İlk satırdan kitap isimleri alınır
+	line=fgets(buffer,sizeof(buffer),fstream); // Ä°lk satÄ±rdan kitap isimleri alÄ±nÄ±r
 		
 		record = strtok(line,";");
 		record = strtok(NULL,";");
@@ -133,16 +131,16 @@ void readusers(int **user_u, int **user_n, int size_u, int book_size){
 	char *record, *line;
 	int i=0, j=0;
 	
-	FILE *fstream = fopen("RecomendationDataSet.csv","r");	// Dosyanın acılması
+	FILE *fstream = fopen("RecomendationDataSet.csv","r");	// DosyanÄ±n acÄ±lmasÄ±
 	if(fstream == NULL){
 		printf("Dosya acilamadi");	
 		exit(0);
 	}
 	line=fgets(buffer,sizeof(buffer),fstream); 
 	
-	for(i=0;i<size_u;i++){	// csv dosyasında hücre değerleri ; ile ayrıldığından strtok ile ilk önce U okuyucularının kitaplara verdiği puanlar matrise alınır
+	for(i=0;i<size_u;i++){	// csv dosyasÄ±nda hÃ¼cre deÄŸerleri ; ile ayrÄ±ldÄ±ÄŸÄ±ndan strtok ile ilk Ã¶nce U okuyucularÄ±nÄ±n kitaplara verdiÄŸi puanlar matrise alÄ±nÄ±r
 		line=fgets(buffer,sizeof(buffer),fstream);
-			record = strtok(line,";");	// ilk değer okuyucu adını icerdigiden atlanır.
+			record = strtok(line,";");	// ilk deÄŸer okuyucu adÄ±nÄ± icerdigiden atlanÄ±r.
 			record = strtok(NULL,";");
 			
 		for(j=0;j<book_size;j++){
@@ -152,7 +150,7 @@ void readusers(int **user_u, int **user_n, int size_u, int book_size){
 		}
 	}
 		i=0;
-	while((line=fgets(buffer,sizeof(buffer),fstream))!=NULL){		// U okuyucuları okunması bittiginde bir sonraki satırdan okunacak satırlar bitene kadar NU okuyuclarının puanları matrise alınır
+	while((line=fgets(buffer,sizeof(buffer),fstream))!=NULL){		// U okuyucularÄ± okunmasÄ± bittiginde bir sonraki satÄ±rdan okunacak satÄ±rlar bitene kadar NU okuyuclarÄ±nÄ±n puanlarÄ± matrise alÄ±nÄ±r
 		record = strtok(line,";");
 		record = strtok(NULL,";");
 			
@@ -200,7 +198,7 @@ int main(){
 	printf(" Oneri Yapilacak Kullanici Sayisi NU:");
 	scanf("%d",&n_user);
 	
-	float **sim = (float**)malloc(sizeof(float*)*size_n);	// Sim matrisi k değerine bağlı olarak en yüksek benzerlik oranlarını ve bu oranların elde edildiği indexleri tutacak
+	float **sim = (float**)malloc(sizeof(float*)*size_n);	// Sim matrisi k deÄŸerine baÄŸlÄ± olarak en yÃ¼ksek benzerlik oranlarÄ±nÄ± ve bu oranlarÄ±n elde edildiÄŸi indexleri tutacak
 	for(i=0;i<size_n;i++)
 		sim[i] = (float*)malloc(sizeof(float)*(2*k));
 	
@@ -213,34 +211,34 @@ int main(){
 	
 	for(i=0;i<size_n;i++){	
 		for(j=0;j<size_u;j++){
-			sonuc = pearson(user_u,user_n,book_size,j,i);	// Her bir NewUser kullanıcısının U kullanıcılına benzerlik oranlarının hesaplanması
-			sim_kont(sonuc,sim,i,j,k);						// Ardından bu degerlerin ilgili fonksiyona gönderilerek en yüksek değerlilerin bulunması
+			sonuc = pearson(user_u,user_n,book_size,j,i);	// Her bir NewUser kullanÄ±cÄ±sÄ±nÄ±n U kullanÄ±cÄ±lÄ±na benzerlik oranlarÄ±nÄ±n hesaplanmasÄ±
+			sim_kont(sonuc,sim,i,j,k);						// ArdÄ±ndan bu degerlerin ilgili fonksiyona gÃ¶nderilerek en yÃ¼ksek deÄŸerlilerin bulunmasÄ±
 		}
 	}
 	
 		printf("\n NU:%d icin en benzerler:\n",n_user);
 		for(j=k;j<(2*k);j++){
-			printf("\t U:%.0f -> %.3f\n",sim[n_user-1][j]+1,sim[n_user-1][j-k]);	// İstenilen NU kullanıcısının k girdisine bağlı olarak en yüksek benzerlikli
-		}																			// U kullanıcılarının listelenmesi
+			printf("\t U:%.0f -> %.3f\n",sim[n_user-1][j]+1,sim[n_user-1][j-k]);	// Ä°stenilen NU kullanÄ±cÄ±sÄ±nÄ±n k girdisine baÄŸlÄ± olarak en yÃ¼ksek benzerlikli
+		}																			// U kullanÄ±cÄ±larÄ±nÄ±n listelenmesi
 		
 	printf("\n NU:%d icin Tahmini Begenme Degerleri: \n",n_user);
 	
-	float offer;			// Her bir pred değerini tutacak değişken
-	int offer_index;		// Tutulan pred değerinin hangi kitaba ait olduğunu tutacak değişken
-	float offer_temp = -1;	// Bir önceki pred değeriyle karşılaştırabilmek için tutulan temp değer ilk adımda çalışabilmesi için -1 değeri verildi
+	float offer;			// Her bir pred deÄŸerini tutacak deÄŸiÅŸken
+	int offer_index;		// Tutulan pred deÄŸerinin hangi kitaba ait olduÄŸunu tutacak deÄŸiÅŸken
+	float offer_temp = -1;	// Bir Ã¶nceki pred deÄŸeriyle karÅŸÄ±laÅŸtÄ±rabilmek iÃ§in tutulan temp deÄŸer ilk adÄ±mda Ã§alÄ±ÅŸabilmesi iÃ§in -1 deÄŸeri verildi
 	
 		for(j=0;j<book_size;j++){
-			if(user_n[n_user-1][j] == 0){	// İstenilen NU kullanıcısının okumadığı kitaplara göre tahmin oluşturulacak
-				offer = offer_book(sim,user_u,user_n,n_user-1,j,k,book_size);	// Tahmin değerinin hesaplanması
+			if(user_n[n_user-1][j] == 0){	// Ä°stenilen NU kullanÄ±cÄ±sÄ±nÄ±n okumadÄ±ÄŸÄ± kitaplara gÃ¶re tahmin oluÅŸturulacak
+				offer = offer_book(sim,user_u,user_n,n_user-1,j,k,book_size);	// Tahmin deÄŸerinin hesaplanmasÄ±
 						printf("\t %s -> %.4f\n",books[j],offer);
-					if(offer > offer_temp){	// Eğer öneri değeri önceki öneri değerinden büyükse bu değer önerilen kitap olacak
-						offer_index = j;	// Önerilecek kitabın indexi tutulur
-						offer_temp = offer; // Diğer değerlerle karşılaştırabilmek için öneri değeri offer_temp değişkeninde tutulur
+					if(offer > offer_temp){	// EÄŸer Ã¶neri deÄŸeri Ã¶nceki Ã¶neri deÄŸerinden bÃ¼yÃ¼kse bu deÄŸer Ã¶nerilen kitap olacak
+						offer_index = j;	// Ã–nerilecek kitabÄ±n indexi tutulur
+						offer_temp = offer; // DiÄŸer deÄŸerlerle karÅŸÄ±laÅŸtÄ±rabilmek iÃ§in Ã¶neri deÄŸeri offer_temp deÄŸiÅŸkeninde tutulur
 					}
 				}
 			}
 		
-		printf("\n NU:%d icin onerilen kitap\n\t--- %s ---\n",n_user,books[offer_index]);	// İstenilen kullanıcıya önerilecek kitabın görüntülenmesi
+		printf("\n NU:%d icin onerilen kitap\n\t--- %s ---\n",n_user,books[offer_index]);	// Ä°stenilen kullanÄ±cÄ±ya Ã¶nerilecek kitabÄ±n gÃ¶rÃ¼ntÃ¼lenmesi
 	
 	free(sim);
 	return 0;
